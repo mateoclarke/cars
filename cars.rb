@@ -1,7 +1,8 @@
 class Car
 	@@total_car_count = 0
 	@@cars_per_color = {}
-
+	attr_accessor :color
+	
 	#Self refers to the class in this case...
 	#@@total_car_count is a class variable
 	def self.total_car_count
@@ -16,15 +17,11 @@ class Car
 	#Each time a new instance of car is created, the class variable @@total_car_count
 	#increases by one.
 	#Each car has a 10 unit tank and starts with 0.
-	def initialize(color, convertible)
+	def initialize(color)
 		@@total_car_count += 1
 		@fuel = 10
 		@distance = 0
 		@color = color
-		@convertible = nil
-		if @convertible == true
-			@roof_status = "top down"
-		end
 		if @@cars_per_color[color]
 			@@cars_per_color[color] += 1
 		else
@@ -48,12 +45,21 @@ class Car
 		puts "You must pay $#{3.5 * gallons_needed}"
 		@fuel = 10.0
 	end
-
+	
 	def self.most_popular_color
 		best_color = @@cars_per_color.max_by{|k,v| v}
 		puts best_color[0]
 	end
+end
+
 	
+class ConvertibleCar < Car 
+	def initialize(color)
+		@convertible = true
+		@roof_status = "top down"
+		@color = color
+	end
+
 	# If our car is a convertible, it has the
 	# default status of top down
 	def roof_status
@@ -65,22 +71,24 @@ class Car
 	# This method puts down a convertible's top
 	def top_down
 		if @convertible == true
-		@roof_status == "top down... I be rollin' wit day wind in mah face."
+		@roof_status = "top down"
+		puts "Put the top down. I be rollin' wit day wind in mah face."
 		end
 	end
 
 	# This method puts up a convertible's top
 	def close_top
 		if @convertible == true
-		@roof_status == "top up... nahhh, its cold out."
+		@roof_status = "top up" 
+		puts "Put the top up. Its cold out."
 		end
 	end
 
 end
 
-car_a= Car.new("red", true) 
-car_c= Car.new("red", true) 
-car_b = Car.new("blue", false)
+car_a= Car.new("red") 
+car_c= Car.new("red") 
+car_b = Car.new("blue")
 puts car_a
 puts car_b
 car_a.drive(10)
@@ -91,8 +99,12 @@ car_b.drive(117)
 puts car_a
 puts car_b
 Car.most_popular_color
-car_a.roof_status
-car_b.roof_status
+
+convertible_a = ConvertibleCar.new("orange")
+puts convertible_a.color
+puts convertible_a.roof_status
+puts convertible_a.close_top
+puts convertible_a.roof_status
 
 
 
