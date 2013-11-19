@@ -21,7 +21,10 @@ class Car
 		@fuel = 10
 		@distance = 0
 		@color = color
-		@convertible = true
+		@convertible = nil
+		if @convertible == true
+			@roof_status = "top down"
+		end
 		if @@cars_per_color[color]
 			@@cars_per_color[color] += 1
 		else
@@ -51,12 +54,33 @@ class Car
 		puts best_color[0]
 	end
 	
+	# If our car is a convertible, it has the
+	# default status of top down
+	def roof_status
+		if @convertible == true
+		puts @roof_status
+		end
+	end
+
+	# This method puts down a convertible's top
+	def top_down
+		if @convertible == true
+		@roof_status == "top down... I be rollin' wit day wind in mah face."
+		end
+	end
+
+	# This method puts up a convertible's top
+	def close_top
+		if @convertible == true
+		@roof_status == "top up... nahhh, its cold out."
+		end
+	end
 
 end
 
-car_a= Car.new("red") 
-car_c= Car.new("red") 
-car_b = Car.new("blue")
+car_a= Car.new("red", true) 
+car_c= Car.new("red", true) 
+car_b = Car.new("blue", false)
 puts car_a
 puts car_b
 car_a.drive(10)
@@ -67,6 +91,9 @@ car_b.drive(117)
 puts car_a
 puts car_b
 Car.most_popular_color
+car_a.roof_status
+car_b.roof_status
+
 
 
 
